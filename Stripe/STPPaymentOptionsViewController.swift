@@ -322,6 +322,8 @@ public class STPPaymentOptionsViewController: STPCoreViewController,
 
   override func createAndSetupViews() {
     super.createAndSetupViews()
+    
+    navigationItem.backButtonTitle = ""
 
     let activityIndicator = STPPaymentActivityIndicatorView()
     activityIndicator.animating = true

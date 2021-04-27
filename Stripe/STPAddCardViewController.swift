@@ -13,7 +13,9 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
   STPCardScannerDelegate, STPPaymentCardTextFieldDelegate, UITableViewDelegate,
   UITableViewDataSource
 {
-
+    override func useSystemBackButton() -> Bool {
+        return true
+    }
   /// A convenience initializer; equivalent to calling `init(configuration: STPPaymentConfiguration.shared, theme: STPTheme.defaultTheme)`.
   @objc
   public convenience init() {
