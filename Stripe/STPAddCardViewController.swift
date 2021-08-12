@@ -116,6 +116,7 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
   private var hasUsedShippingAddress = false
   private weak var cardImageView: UIImageView?
   private var doneItem: UIBarButtonItem?
+    private var closeItem: UIBarButtonItem?
   private var cardHeaderView: STPSectionHeaderView?
   @available(iOS 13, *)
   private lazy var cardScanner: STPCardScanner? = nil
@@ -226,6 +227,16 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
 
     let doneItem = UIBarButtonItem(
       barButtonSystemItem: .done, target: self, action: #selector(nextPressed(_:)))
+    
+    if (configuration?.showCancelWhenAddCardStandalone == true) {
+        let closeItem = UIBarButtonItem(
+            barButtonSystemItem: .stop, target: self, action: #selector(closePressed(_:)))
+        
+        self.closeItem = closeItem
+        
+        stp_navigationItemProxy?.leftBarButtonItem = closeItem
+    }
+    
     self.doneItem = doneItem
     stp_navigationItemProxy?.rightBarButtonItem = doneItem
     updateDoneButton()
@@ -408,6 +419,10 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
   public override func handleCancelTapped(_ sender: Any?) {
     delegate?.addCardViewControllerDidCancel(self)
   }
+    
+    @objc func closePressed(_ sender: Any?) {
+        delegate?.addCardViewControllerDidCancel(self)
+    }
 
   @objc func nextPressed(_ sender: Any?) {
     loading = true
