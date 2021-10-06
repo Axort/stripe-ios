@@ -297,7 +297,7 @@ class STPPaymentOptionsInternalViewController: STPCoreTableViewController, UITab
             cardPaymentOptions().stp_boundSafeObject(at: indexPath.row)
             let selected = paymentOption!.isEqual(selectedPaymentOption)
 
-            cell?.configure(with: paymentOption!, theme: theme, selected: selected)
+            cell?.configure(with: paymentOption!, theme: theme, selected: false)
         } else if indexPath.section == PaymentOptionSectionAddCard {
             cell?.configureForNewCardRow(with: theme)
             cell?.accessibilityIdentifier = "PaymentOptionsTableViewAddNewCardButtonIdentifier"

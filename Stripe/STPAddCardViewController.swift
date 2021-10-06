@@ -14,6 +14,9 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
     STPCardScannerDelegate, STPPaymentCardTextFieldDelegate, UITableViewDelegate,
     UITableViewDataSource
 {
+    override func useSystemBackButton() -> Bool {
+        return true
+    }
 
     /// A convenience initializer; equivalent to calling `init(configuration: STPPaymentConfiguration.shared, theme: STPTheme.defaultTheme)`.
     @objc
@@ -115,6 +118,7 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
     private var hasUsedShippingAddress = false
     private weak var cardImageView: UIImageView?
     private var doneItem: UIBarButtonItem?
+    private var closeItem: UIBarButtonItem?
     private var cardHeaderView: STPSectionHeaderView?
     @available(iOS 13, macCatalyst 14, *)
     private lazy var cardScanner: STPCardScanner? = nil
@@ -224,9 +228,20 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
 
     @objc override func createAndSetupViews() {
         super.createAndSetupViews()
+        
+        navigationItem.backButtonTitle = ""
 
         let doneItem = UIBarButtonItem(
             barButtonSystemItem: .done, target: self, action: #selector(nextPressed(_:)))
+        
+        if (configuration?.showCancelWhenAddCardStandalone == true) {
+            let closeItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(closePressed(_:)))
+
+            self.closeItem = closeItem
+
+            stp_navigationItemProxy?.leftBarButtonItem = closeItem
+        }
+        
         self.doneItem = doneItem
         stp_navigationItemProxy?.rightBarButtonItem = doneItem
         updateDoneButton()
@@ -414,6 +429,10 @@ public class STPAddCardViewController: STPCoreTableViewController, STPAddressVie
     /// :nodoc:
     @objc
     public override func handleCancelTapped(_ sender: Any?) {
+        delegate?.addCardViewControllerDidCancel(self)
+    }
+    
+    @objc func closePressed(_ sender: Any?) {
         delegate?.addCardViewControllerDidCancel(self)
     }
 

@@ -87,6 +87,8 @@ public class STPPaymentConfiguration: NSObject, NSCopying {
     /// https://github.com/stripe/stripe-ios/issues
     /// The default value is currently NO. This will be changed in a future update.
     @objc public var cardScanningEnabled = false
+    
+    @objc public var showCancelWhenAddCardStandalone = false
     // MARK: - Deprecated
 
     /// An enum value representing which payment options you will accept from your user
@@ -234,6 +236,7 @@ public class STPPaymentConfiguration: NSObject, NSCopying {
         copy.availableCountries = availableCountries
         copy._publishableKey = _publishableKey
         copy._stripeAccount = _stripeAccount
+        copy.showCancelWhenAddCardStandalone = showCancelWhenAddCardStandalone
         return copy
     }
 }
